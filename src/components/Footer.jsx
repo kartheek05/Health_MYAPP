@@ -1,9 +1,8 @@
 import './style.css'
+
 function Footer() {
   return (
-    <div>
-      
-    </div>
+    <div>Footer</div>
   )
 }
 

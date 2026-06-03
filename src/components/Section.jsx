@@ -1,15 +1,19 @@
 import './style.css'
+
 function Section() {
   return (
     <section>
         <div>
-            <h1>Mr.Doctor</h1>
+            <h1>mr.doctor</h1>
             <p>Find Your Doctor for all your health problems</p>
         </div>
         <div>
-            <img src="https://images.picxy.com/cache/2020/7/11/852aae55d93c58c8782c29c7e6adb220.jpg" alt="OnePiece" />
+            <img src="https://img.magnific.com/free-photo/beautiful-house-with-nature-elements_23-2151848749.jpg?t=st=1779407447~exp=1779411047~hmac=4491729e2ed0e9b990c346e00a6f66da028f7a20c6eed04da761098a55e2b67c" alt="" />
         </div>
     </section>
+    /*
+   
+    */ 
   )
 }
 

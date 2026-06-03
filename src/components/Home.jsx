@@ -1,44 +1,20 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import Doctorcard from "./Doctorcard"
+import axios from "axios"
 
-
-function Home({newdoctor}) {
+function Home({newdoctor,handleupdate}) {
 
     let [doctors,setDoctors]=useState([])
     let [search,setSearch]=useState('')
     let [specialization,setSpecialization]=useState('')
 
-     function fetchdata(){
-      
-     let data = [
-                {
-                    id: 1,
-                    name: "Teja",
-                    age: 26,
-                    gender: "Male",
-                    specialization: "Muscles",
-                    salary: 7000000
-                },
-                {
-                    id: 2,
-                    name: "Sam",
-                    age: 26,
-                    gender: "Male",
-                    specialization: "Bones",
-                    salary: 4000000
-                },
-                {
-                    id: 3,
-                    name: "Anu",
-                    age: 25,
-                    gender: "Female",
-                    specialization: "Heart",
-                    salary: 5000000
-                }
-            ]
-         
-            setDoctors(data)
+   async  function fetchdata(){
+
+            let val=await fetch('https://doc-back.onrender.com/doctors')
+            let finaldata=await val.json()
+        
+            setDoctors(finaldata)
 
      }
     useEffect(()=>{
@@ -46,10 +22,11 @@ function Home({newdoctor}) {
     },[])
 
     useEffect(()=>{
-        if(newdoctor){
-            setDoctors((prev)=>[...prev,newdoctor])
-        }
-        console.log(search,specialization)
+        // if(newdoctor){
+        //     setDoctors((prev)=>[...prev,newdoctor])
+        // }
+        // console.log(search,specialization)
+        fetchdata()
 
     },[newdoctor])
 
@@ -60,6 +37,14 @@ function Home({newdoctor}) {
         (specialization=="" || specialization==val.specialization)
     )
     })
+
+    async function deletedoctor(id){
+        await axios.delete(`https://doc-back.onrender.com/doctors/${id}`)
+        fetchdata()
+    }
+
+
+
   return (
    <div>
     <div className='filters'>
@@ -68,7 +53,6 @@ function Home({newdoctor}) {
 
     <select name="" id="" value={specialization}
     onChange={(e)=>setSpecialization(e.target.value)}>
-        <option value="" disabled>Select Option</option>
         <option value="Muscles">muscles</option>
         <option value="Heart">heart</option>
         <option value="Bones">bones</option>
@@ -76,7 +60,7 @@ function Home({newdoctor}) {
     </div>
      <div  className='doctorcontainer'>
         {filterdata.length>0?filterdata.map((val)=>(
-            <Doctorcard key={val.id} name={val.name} gender={val.gender} specialization={val.specialization}/>
+            <Doctorcard handleupdate={handleupdate} deletedoctor={deletedoctor} id={val.id} key={val.id} name={val.name} gender={val.gender} specialization={val.specialization}/>
         )): <h2>no doctors found</h2>}
     </div>
    </div>

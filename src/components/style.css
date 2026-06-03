@@ -23,7 +23,7 @@ nav{
 
     /* card styles */
     .doctorcard{
-        border:1px solid rgb(10, 10, 10);
+        border:1px solid black;
         border-radius:10px;
         padding:20px;
         
@@ -44,7 +44,7 @@ nav{
 
     /* form styling */
     .formcontainer{
-        border:2px solid rgb(8, 8, 8);
+        border:2px solid black;
         width:70%;
         border-radius:10px;
         margin:auto;

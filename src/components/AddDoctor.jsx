@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Home from './Home'
+import axios from 'axios'
 
 function Adddoctor() {
     const [name,setName]=useState('')
@@ -7,13 +8,19 @@ function Adddoctor() {
     const [gender,setGender]=useState('')
     const [specialization,setSpecialization]=useState('')
     const [salary,setSalary]=useState('')
-    const [newdoctor,setNewdoctor] = useState(null)
-    function handleform(e){
+
+    const [newdoctor,setNewdoctor]=useState(null)
+
+    async function handleform(e){
         e.preventDefault()
         const formdata={
-          name,age,gender,specialization,salary
+          name,age,gender,specialization,salary,
+          id:Date.now()
         }
-        setNewdoctor(formdata)
+        await axios.post('https://doc-back.onrender.com/doctors/',formdata)
+        
+
+      setNewdoctor(formdata)
         console.log(formdata)
         setName('')
         setAge('')
@@ -21,12 +28,24 @@ function Adddoctor() {
         setSpecialization('')
         setSalary('')
     }
+
+    async function handleupdate(id){
+      const updateddata={
+        name:'john',
+        age:24,
+        gender:'male',
+        specialization:"Heart",
+         salary:9000000
+      }
+      await axios.put(`https://doc-back.onrender.com/doctors/${id}`,updateddata)
+      setNewdoctor(null)
+    }
   return (
-    <div className='formcontainer'>
+    <div>
       <h1>Add doctor</h1>
 
 
-    <form onSubmit={handleform}>
+    <form onSubmit={handleform}  className='formcontainer'>
         <input type="text" className='textfield' value={name} 
         placeholder='Enter Doctor Name' onChange={e=>setName(e.target.value)} />
 
@@ -47,7 +66,8 @@ function Adddoctor() {
 
         <button type='submit'>ADD</button>
     </form> 
-    <Home newdoctor={newdoctor}/>
+
+    <Home newdoctor={newdoctor} handleupdate={handleupdate}/>
     </div>
   )
 }
