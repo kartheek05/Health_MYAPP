@@ -4,10 +4,14 @@ import Section from "./components/Section"
 import Adddoctor from "./components/Adddoctor"
 import { Route, Routes } from "react-router-dom"
 import Doctordetails from "./components/Doctordetails"
-import Weather from "./components/Weather"
-// import { useState } from "react"
+// import Weather from "./components/Weather"
+import { useState } from "react"
+import ProtectedRoute from "./components/Protcted_Route"
 // import { useEffect } from "react"
+import useCounter from "./components/useCounter"
 function App() {
+  const {count,increment,decrement}=useCounter(0)
+  const [islogin,setislogin]=useState(false)
 
   // let [count,setCount]=useState(0)
   // function addcount(){
@@ -20,14 +24,34 @@ function App() {
 
   return (
     <div>
+      {count}
+      <button onClick={increment}>inc</button>
+      <button onClick={decrement}>dnc</button>
+      
        {/* {count}
       <button  onClick={addcount}>click to increase</button>  */}
-      <Weather/>
+      {/* <Weather/> */}
+      {/*
+      
+    protected routes
+
+    usememo
+
+    custom hooks
+
+    error handling methods - try catch
+      
+      
+      */}
       <Navbar/>
+      <button onClick={()=>setislogin(true)}>click to login</button>
       <Routes>
         <Route path='/' element={<Section/>}/>
-        <Route path='/add-doctor' element={<Adddoctor/>}/>
-        <Route path='/doctor/:id' element={<Doctordetails/>}/>
+        <Route path='/add-doctor' element={
+          <ProtectedRoute islogin={islogin}><Adddoctor/></ProtectedRoute>}/>
+        <Route path='/doctor/:id' element={
+          <ProtectedRoute islogin={islogin}><Doctordetails/></ProtectedRoute>
+        }/>
       </Routes>
       {/* <Section/> */}
       {/* <div className='doctorcontainer'>
